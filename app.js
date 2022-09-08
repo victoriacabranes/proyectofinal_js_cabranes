@@ -49,10 +49,14 @@ while (option !== 0) {
                 addProduct(inputId);
             break;
         case 2:
-                const totalPrice = shoppingCart.map(product => product.price).reduce((acc, cur) => acc + cur);
-                const totalProducts = shoppingCart.map(product => product.stock + product.product);
-                alert("tu precio final es de: " + totalProducts + " " + "\n$: " + totalPrice);
-                const option = Number(prompt("Desea quitar un producto? Ingrese \n1. Si \n2. No"));
+                if (shoppingCart.length === 0) {
+                    alert("No tienes nada en el carrito de compras")
+                } else {
+                    const totalPrice = shoppingCart.map(product => product.price).reduce((acc, cur) => acc + cur);
+                    const totalProducts = shoppingCart.map(product => product.stock + product.product);
+                    alert("tu precio final es de: " + totalProducts + " " + "\n$: " + totalPrice);
+                    const option = Number(prompt("Desea quitar un producto? Ingrese \n1. Si \n2. No"));
+                }
                 if (option === 1) {
                     const inputId = Number(prompt("Ingrese el producto que desea eliminar: \n1. Cartuchera ($1200) \n2. Agenda ($1500) \n3. Regla ($300) \n4. Post-It ($850) \n5. Lapicera Bic ($200)"));
                     deleteProduct(inputId);
