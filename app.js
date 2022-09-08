@@ -72,7 +72,7 @@ while (option !== 0) {
 function addProduct (inputId) {
     const product = products.find((product) => product.id === inputId);
     if (shoppingCart.find(p => p.id === product.id)) {
-    let index = shoppingCart.findIndex(e => e.id === product.id);
+    let index = shoppingCart.findIndex(item => item.id === product.id);
     shoppingCart[index].stock = shoppingCart[index].stock + 1 ;
     shoppingCart[index].price = shoppingCart[index].price * shoppingCart[index].stock;
     return
