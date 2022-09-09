@@ -56,6 +56,8 @@ while (option !== 0) {
                     const totalProducts = shoppingCart.map(product => product.stock + product.product);
                     alert("tu precio final es de: " + totalProducts + " " + "\n$: " + totalPrice);
                     const option = Number(prompt("Desea quitar un producto? Ingrese \n1. Si \n2. No"));
+                    
+                    // se muestra el resultado total que se llevo en el carrito al salir
                     const cart = document.getElementById("cart");
                     const p = document.createElement("p");
                     p.innerHTML = `<p>${totalProducts} y precio total a pagar: ${totalPrice}`
