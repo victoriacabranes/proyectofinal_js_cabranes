@@ -1,5 +1,5 @@
 
-let products = [
+const products = [
     {
         id: 1,
         product: "Cartuchera",
@@ -36,7 +36,7 @@ let products = [
     }
 ];
 
-let shoppingCart = [];
+const shoppingCart = [];
 
 let option;
 
@@ -56,6 +56,10 @@ while (option !== 0) {
                     const totalProducts = shoppingCart.map(product => product.stock + product.product);
                     alert("tu precio final es de: " + totalProducts + " " + "\n$: " + totalPrice);
                     const option = Number(prompt("Desea quitar un producto? Ingrese \n1. Si \n2. No"));
+                    const cart = document.getElementById("cart");
+                    const p = document.createElement("p");
+                    p.innerHTML = `<p>${totalProducts} y precio total a pagar: ${totalPrice}`
+                    cart.append(p)
                 }
                 if (option === 1) {
                     const inputId = Number(prompt("Ingrese el producto que desea eliminar: \n1. Cartuchera ($1200) \n2. Agenda ($1500) \n3. Regla ($300) \n4. Post-It ($850) \n5. Lapicera Bic ($200)"));
