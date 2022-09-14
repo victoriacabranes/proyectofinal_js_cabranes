@@ -1,0 +1,16 @@
+
+.product {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+   
+}
+
+.product img {
+    width: 100px;
+    height: auto;
+}
+
+.product button {
+    width: 70px;
+}

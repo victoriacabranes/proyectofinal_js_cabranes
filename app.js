@@ -1,100 +1,73 @@
 
-const products = [
-    {
-        id: 1,
-        product: "Cartuchera",
-        price: 1200,
-        stock: 1
-    },
 
-    {
-        id: 2,
-        product: "Agenda",
-        price: 1500,
-        stock: 1
-    },
-
-    {
-        id: 3,
-        product: "Regla",
-        price: 300,
-        stock: 1
-    },
-
-    {
-        id: 4,
-        product: "Post-It",
-        price: 850,
-        stock: 1
-    },
-
-    {
-        id: 5,
-        product: "Lapicera Bic",
-        price: 200,
-        stock: 1
-    }
-];
-
-const shoppingCart = [];
-
-let option;
-
-while (option !== 0) {
-    option = Number(prompt("Elija una opción:\n1. Agregar productos al carrito \n2. Ver total de compra \n0. Salir" ));
-
-    switch (option) {
-        case 1:
-                const inputId = Number(prompt("Ingrese el producto que desea agregar:\n1. Cartuchera ($1200) \n2. Agenda ($1500) \n3. Regla ($300) \n4. Post-It ($850) \n5. Lapicera Bic ($200)"));
-                addProduct(inputId);
-            break;
-        case 2:
-                if (shoppingCart.length === 0) {
-                    alert("No tienes nada en el carrito de compras")
-                } else {
-                    const totalPrice = shoppingCart.map(product => product.price).reduce((acc, cur) => acc + cur);
-                    const totalProducts = shoppingCart.map(product => product.stock + product.product);
-                    alert("tu precio final es de: " + totalProducts + " " + "\n$: " + totalPrice);
-                    const option = Number(prompt("Desea quitar un producto? Ingrese \n1. Si \n2. No"));
-                    
-                    // se muestra el resultado total que se llevo en el carrito al salir
-                    const cart = document.getElementById("cart");
-                    const p = document.createElement("p");
-                    p.innerHTML = `<p>${totalProducts} y precio total a pagar: ${totalPrice}`
-                    cart.append(p)
-                }
-                if (option === 1) {
-                    const inputId = Number(prompt("Ingrese el producto que desea eliminar: \n1. Cartuchera ($1200) \n2. Agenda ($1500) \n3. Regla ($300) \n4. Post-It ($850) \n5. Lapicera Bic ($200)"));
-                    deleteProduct(inputId);
-                }
-            break;
-        case 0:
-                alert("Gracias por su visita. Vuelva pronto")
-            break;
-        default:
-                alert("La opción ingresada no es correcta, intente nuevamente");
-            break;
+class Product {
+    constructor(id,name,image,price,stock) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.price = price,
+        this.stock = stock;
     }
 }
 
-//funciones para el switch
+const product1 = new Product(1, "Eyeliner", "images/eyelinner.webp", 1500, 1);
+const product2 = new Product(2, "Paleta de Sombras", "images/eyeshadow.webp", 7000, 1);
+const product3 = new Product(3, "Labial", "images/lipstick.webp", 2100, 1);
+const product4 = new Product(4, "Iluminador", "images/highlighter.webp", 1800, 1);
 
-function addProduct (inputId) {
-    const product = products.find((product) => product.id === inputId);
-    if (shoppingCart.find(p => p.id === product.id)) {
-    let index = shoppingCart.findIndex(item => item.id === product.id);
-    shoppingCart[index].stock = shoppingCart[index].stock + 1 ;
-    shoppingCart[index].price = shoppingCart[index].price * shoppingCart[index].stock;
-    return
-    } else {
-    return shoppingCart.push(product);
-    }
+const products = [];
+products.push(product1);
+products.push(product2);
+products.push(product3);
+products.push(product4);
+
+let shoppingCart = [];
+
+// funcion para mostrar productos en el html 
+function showProducts (products) {
+    const containerProducts = document.getElementById("containerProducts")
+    containerProducts.innerHTML = "";
+
+    
+    products.forEach((product) => {
+        const divProduct = document.createElement("div");
+        divProduct.classList.add("product");
+        divProduct.innerHTML = `<h2>${product.name}</h2> <img src="${product.image}" alt=""> <h3>$ ${product.price}</h3> <button id= "add${product.id}" type="button">Agregar</button> `;
+        
+        containerProducts.appendChild(divProduct);
+
+        const btn = document.getElementById(`add${product.id}`)
+
+        btn.addEventListener("click", () => {
+            addShoppingCart(product.id)
+        })
+    });
 }
 
-
-function deleteProduct (inputId) {
-    const product = products.find((product) => product.id === inputId);
-    shoppingCart.pop(product);
+// funcion para agregar productos al carrito 
+const addShoppingCart = (productId) => {
+    const item = products.find((p) => p.id === productId)
+    shoppingCart.push(item)
 }
+showProducts(products);
+console.log(shoppingCart);
 
-  
+// creo boton carrito
+const containerCart = document.getElementById("cart")
+containerCart.innerHTML = "";
+const divCart = document.createElement("div")
+divCart.innerHTML = `<button type=button id=cartBtn>Carrito</button>`
+containerCart.appendChild(divCart)
+
+// funcion para mostrar carrito 
+const btnCart = document.getElementById("cartBtn")
+btnCart.addEventListener('click', () => {
+    const totalPrice = shoppingCart.map(product => product.price).reduce((acc, cur) => acc + cur);
+    const totalProducts = shoppingCart.map(product => product.stock + product.name);
+
+    const divCartDisplay = document.createElement("div")
+    divCartDisplay.innerHTML = `<h3>Productos: ${totalProducts} </h3> <h4>Precio total: $${totalPrice}</h4>`
+    containerCart.appendChild(divCartDisplay)
+})
+
+
